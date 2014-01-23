@@ -59,6 +59,7 @@ public class BaseCommand implements CommandExecutor	{
 						for(String m : helpMessage){
 							sender.sendMessage(SGUtils.ColorMessage(m));
 						}
+						//	#IGNORE
 						SoulJar jar = new SoulJar();
 						jar.setType(Type.CHICKEN);
 						jar.setName("Chicken Soul");
@@ -69,7 +70,8 @@ public class BaseCommand implements CommandExecutor	{
 						}
 						else{
 							Inventory inv = ((Player) sender).getInventory();
-							ItemStack souljar = new ItemStack(Material.POTION, 1, (byte) 21);
+							ItemStack souljar = new ItemStack(Material.POTION, 1, (short) 21);
+								souljar.setDurability((short)2000);
 							ItemMeta meta = souljar.getItemMeta();
 							List<String> lore = Arrays.asList(SGUtils.ColorMessage("&7&oChicken Soul"), SGUtils.ColorMessage("&7Level: 1"));
 							meta.setDisplayName(SGUtils.ColorMessage("&dChicken Soul"));
@@ -78,6 +80,7 @@ public class BaseCommand implements CommandExecutor	{
 							inv.setItem(inv.firstEmpty(), souljar);
 							sender.sendMessage(SGUtils.ColorMessage("&dCongratulations! You have a useless Chicken Soul Jar."));
 						}
+						//	#ENDIGNORE
 					}
 				}
 			}

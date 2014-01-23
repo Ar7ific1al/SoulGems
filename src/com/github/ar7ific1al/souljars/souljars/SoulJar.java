@@ -37,12 +37,12 @@ public class SoulJar {
 		HUMAN
 	}
 		
-	public boolean isValidJarValue(int val){
-		int min = 1000;
-		int max = 6000;
+	public static boolean isValidJarValue(short val){
+		short min = 1000;
+		short max = 6000;
 		
 		if (val >= min && val <= max){
-			if (this.value % 64 == 0){
+			if (val % 64 == 0){
 				return false;
 			}
 			else{
