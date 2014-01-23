@@ -10,5 +10,5 @@ commands:
         usage: /<command>
 permissions:
     place.holder.permission:
-        description: Placeholder permission
+        description: Placeholder permissions
         default: op
