@@ -1,13 +1,25 @@
 package com.github.ar7ific1al.souljars.commands.global;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.material.MaterialData;
 
 import com.github.ar7ific1al.souljars.Plugin;
+import com.github.ar7ific1al.souljars.souljarevents.SoulJarFillEvent;
+import com.github.ar7ific1al.souljars.souljars.SoulJar;
+import com.github.ar7ific1al.souljars.souljars.SoulJar.Type;
 import com.github.ar7ific1al.souljars.utils.SGUtils;
 
 public class BaseCommand implements CommandExecutor	{
@@ -46,6 +58,25 @@ public class BaseCommand implements CommandExecutor	{
 						//	For each String "m" in helpMessage - Similar to C# foreach (object o in object)
 						for(String m : helpMessage){
 							sender.sendMessage(SGUtils.ColorMessage(m));
+						}
+						SoulJar jar = new SoulJar();
+						jar.setType(Type.CHICKEN);
+						jar.setName("Chicken Soul");
+						SoulJarFillEvent event = new SoulJarFillEvent((Player) sender, jar);
+						Bukkit.getPluginManager().callEvent(event);
+						if (event.isCancelled()){
+							sender.sendMessage(SGUtils.ColorMessage("&cYou cannot fill that Soul Jar."));
+						}
+						else{
+							Inventory inv = ((Player) sender).getInventory();
+							ItemStack souljar = new ItemStack(Material.POTION, 1, (byte) 21);
+							ItemMeta meta = souljar.getItemMeta();
+							List<String> lore = Arrays.asList(SGUtils.ColorMessage("&7&oChicken Soul"), SGUtils.ColorMessage("&7Level: 1"));
+							meta.setDisplayName(SGUtils.ColorMessage("&dChicken Soul"));
+							meta.setLore(lore);
+							souljar.setItemMeta(meta);
+							inv.setItem(inv.firstEmpty(), souljar);
+							sender.sendMessage(SGUtils.ColorMessage("&dCongratulations! You have a useless Chicken Soul Jar."));
 						}
 					}
 				}
