@@ -7,8 +7,8 @@ version: 0.1a
 commands:
     soulgems:
         description: Base command for SoulGems
-        usage: /newgrave GraveTitle UseYaw UsePitch
+        usage: /<command>
 permissions:
     place.holder.permission:
-        description: Create new graves, view grave list, teleport to grave
+        description: Placeholder permission
         default: op
