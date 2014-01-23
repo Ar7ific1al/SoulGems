@@ -1,4 +1,4 @@
-package com.github.ar7ific1al.souljars.souljar;
+package com.github.ar7ific1al.souljars.souljars;
 
 public class SoulJar {
 	
