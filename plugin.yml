@@ -1,0 +1,14 @@
+author: Ar7ific1al
+description: Soul Gems in Minecraft
+main: com.github.ar7ific1al.soulgems.Plugin
+name: SoulGems
+url: 
+version: 0.1a
+commands:
+    soulgems:
+        description: Base command for SoulGems
+        usage: /newgrave GraveTitle UseYaw UsePitch
+permissions:
+    place.holder.permission:
+        description: Create new graves, view grave list, teleport to grave
+        default: op
