@@ -1,12 +1,12 @@
 author: Ar7ific1al
-description: Soul Gems in Minecraft
-main: com.github.ar7ific1al.soulgems.Plugin
-name: SoulGems
+description: Trap animal, player and monster souls in jars
+main: com.github.ar7ific1al.souljars.Plugin
+name: SoulJars
 url: 
 version: 0.1a
 commands:
-    soulgems:
-        description: Base command for SoulGems
+    souljars:
+        description: Base command for SoulJars
         usage: /<command>
 permissions:
     place.holder.permission:

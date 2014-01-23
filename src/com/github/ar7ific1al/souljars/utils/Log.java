@@ -1,4 +1,4 @@
-package com.github.ar7ific1al.soulgems.utils;
+package com.github.ar7ific1al.souljars.utils;
 
 import org.bukkit.command.ConsoleCommandSender;
 
