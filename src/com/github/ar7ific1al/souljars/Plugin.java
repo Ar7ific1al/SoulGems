@@ -1,13 +1,8 @@
 package com.github.ar7ific1al.souljars;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.logging.Logger;
-
-import net.minecraft.util.io.netty.handler.logging.LogLevel;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.PluginDescriptionFile;

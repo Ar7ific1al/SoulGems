@@ -16,7 +16,7 @@ public class BaseCommand implements CommandExecutor	{
 	
 	public BaseCommand(Plugin instance){
 		plugin = instance;
-		plugin.logger.Log(ChatColor.LIGHT_PURPLE + "[SoulJars] BasicCommand Executor Registered.", plugin.getServer().getConsoleSender());
+		Plugin.logger.Log(ChatColor.LIGHT_PURPLE + "[SoulJars] BasicCommand Executor Registered.", plugin.getServer().getConsoleSender());
 	}
 	
 	@Override

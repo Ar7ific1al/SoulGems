@@ -1,8 +1,5 @@
 package com.github.ar7ific1al.souljars.utils;
 
-import java.util.ArrayList;
-import java.util.List;
-
 
 public class SGUtils {
 	
