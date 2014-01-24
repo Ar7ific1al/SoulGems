@@ -1,26 +1,14 @@
 package com.github.ar7ific1al.souljars.commands.global;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.material.MaterialData;
-
 import com.github.ar7ific1al.souljars.Plugin;
-import com.github.ar7ific1al.souljars.souljarevents.SoulJarFillEvent;
 import com.github.ar7ific1al.souljars.souljars.SoulJar;
-import com.github.ar7ific1al.souljars.souljars.SoulJar.Type;
+import com.github.ar7ific1al.souljars.utils.Log;
 import com.github.ar7ific1al.souljars.utils.SJUtils;
 
 public class BaseCommand implements CommandExecutor	{
@@ -29,7 +17,7 @@ public class BaseCommand implements CommandExecutor	{
 	
 	public BaseCommand(Plugin instance){
 		plugin = instance;
-		Plugin.logger.Log(ChatColor.LIGHT_PURPLE + "[SoulJars] BasicCommand Executor Registered.", plugin.getServer().getConsoleSender());
+		Log.LogMessage(ChatColor.LIGHT_PURPLE + "[SoulJars] BasicCommand Executor Registered.", plugin.getServer().getConsoleSender());
 	}
 	
 	@Override
@@ -53,7 +41,7 @@ public class BaseCommand implements CommandExecutor	{
 						//	Define a list of strings to color and send to the user using SGutils.ColorMessage()
 						ArrayList<String> helpMessage = new ArrayList<String>();
 						helpMessage.add("&d-------------------[SoulJars Help]-------------------");
-						helpMessage.add("");	//	Blank separator line :P
+						helpMessage.add("&dPlaceholder text.");	//	Placeholder
 						helpMessage.add("&d-------------------[SoulJars Help]-------------------");
 						
 						//	For each String "m" in helpMessage - Similar to C# foreach (object o in object)
@@ -61,7 +49,7 @@ public class BaseCommand implements CommandExecutor	{
 							sender.sendMessage(SJUtils.ColorMessage(m));
 						}
 						//	#IGNORE
-						SoulJar.giveEmptySoulJar((Player)sender);
+						SoulJar.giveEmptySoulJar((Player)sender, 64);
 						//	#ENDIGNORE
 					}
 				}

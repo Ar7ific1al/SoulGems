@@ -4,8 +4,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.lang.WordUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -16,11 +16,11 @@ import com.github.ar7ific1al.souljars.utils.SJUtils;
 
 public class SoulJar {
 	
-	private String name;
 	private Type type;
-	private int value;
 	private ItemStack souljar;
+	private ItemMeta meta;
 	
+	//	SoulJar Type enum; if it's not on this list, it's invalid!
 	public enum Type{
 		ZOMBIE,
 		CREEPER,
@@ -56,24 +56,42 @@ public class SoulJar {
 		EMPTY
 	}
 	
+	//	Get and set the Type associated with this SoulJar object
 	public Type getType(){
 		return type;
 	}	
 	public void setType(Type type){
 		this.type = type;
 	}
-		
-	public String getName(){
-		return name;
-	}
-	public void setName(String name){
-		this.name = name;
+	
+	//	Get the ItemStack associated with this SoulJar object
+	public ItemStack getItemStack(){
+		return this.souljar;
 	}
 	
+	//	Constructor; create a single empty Soul Jar
 	public SoulJar(){
 		this.type = Type.EMPTY;
+		this.souljar = new ItemStack(Material.GLASS_BOTTLE, 1);
+		this.meta = souljar.getItemMeta();
+		this.meta.setDisplayName(SJUtils.ColorMessage("&bSoul Jar"));
+		List<String> lore = Arrays.asList(SJUtils.ColorMessage("&7Empty"));
+		this.meta.setLore(lore);
+		this.souljar.setItemMeta(this.meta);
 	}
 	
+	//	Constructor; create 'count' empty Soul Jars
+	public SoulJar(int count){
+		this.type = Type.EMPTY;
+		this.souljar = new ItemStack(Material.GLASS_BOTTLE, count);
+		this.meta = souljar.getItemMeta();
+		this.meta.setDisplayName(SJUtils.ColorMessage("&bSoul Jar"));
+		List<String> lore = Arrays.asList(SJUtils.ColorMessage("&7Empty"));
+		this.meta.setLore(lore);
+		this.souljar.setItemMeta(this.meta);
+	}
+	
+	//	Constructor; create a filled Soul Jar
 	public SoulJar(EntityType entityType){
 		switch(entityType){
 		case CREEPER:
@@ -161,39 +179,71 @@ public class SoulJar {
 			this.type = Type.HUMAN;
 			break;
 		}
+
+		this.souljar = new ItemStack(Material.POTION, 1);
+		this.meta = this.souljar.getItemMeta();
+		this.meta.setDisplayName(SJUtils.ColorMessage("&bSoul Jar"));
+		String soulName = entityType.toString();
+		soulName = soulName.replaceAll("[_]", " ");
+		soulName = WordUtils.capitalizeFully(soulName);
+		List<String> lore = Arrays.asList(SJUtils.ColorMessage("&7" + soulName));
+		this.meta.setLore(lore);
+		this.souljar.setItemMeta(this.meta);
 	}
 	
-	public static void giveEmptySoulJar(Player player){
+	//	Give the player an empty Soul Jar; Careful, it can also be used when you should be giving a filled Soul Jar...
+	public static void giveEmptySoulJar(Player player, int count){
 		Inventory inv = player.getInventory();
 		for(ItemStack stack : inv.getContents()){
 			if (stack == null){
-				ItemStack emptySoulJar = new ItemStack(Material.GLASS_BOTTLE, 1, (short) 0);
-				ItemMeta meta = emptySoulJar.getItemMeta();
-				List<String> lore = Arrays.asList(SJUtils.ColorMessage("&7Empty"));
-				meta.setDisplayName(SJUtils.ColorMessage("&bSoul Jar"));
-				meta.setLore(lore);
-				emptySoulJar.setItemMeta(meta);
-				inv.addItem(emptySoulJar);
+				SoulJar emptysouljar = new SoulJar(count);
+				inv.addItem(emptysouljar.souljar);
 				break;
 			}
 		}
 	}
 	
-	public static void giveFilledSoulJar(Player player, Entity entity){
+	//	Give the player the current filled Soul Jar when called
+	public void giveFilledSoulJar(Player player){
 		Inventory inv = player.getInventory();
 		for(ItemStack stack : inv.getContents()){
 			if (stack == null){
-				ItemStack filledSoulJar = new ItemStack(Material.POTION, 1, (short) 0);
-				ItemMeta meta = filledSoulJar.getItemMeta();
-				String entityName = entity.getType().toString().replaceAll("_", " ");
-				entityName = WordUtils.capitalizeFully(entity.getType().toString());
-				List<String> lore = Arrays.asList(SJUtils.ColorMessage("&7" + entityName + " Soul"));
-				meta.setDisplayName(SJUtils.ColorMessage("&bSoul Jar"));
-				meta.setLore(lore);
-				filledSoulJar.setItemMeta(meta);
-				inv.addItem(filledSoulJar);
+				inv.addItem(this.souljar);
 				break;
 			}
+		}
+	}
+	
+	/**
+	 * @param player	Used to access the inventory from which the empty Soul Jar will be taken
+	 * @param count		Quite self explanatory, but it's how many empty Soul Jars to take
+	 */
+	public static void takeEmptySoulJar(Player player, int count){
+		SoulJar emptySoulJar = new SoulJar(count);
+		Inventory inventory = player.getInventory();
+		int jarsFound = 0;
+		for(ItemStack item : inventory.getContents()){	//	For each ItemStack in player's inventory
+			if (item != null){	//	If the item stack is not a null stack (empty Inventory space)
+				if (item.getType().equals(Material.GLASS_BOTTLE)){
+					ItemMeta meta = item.getItemMeta();	//	Grab the ItemStack's meta
+					if (meta.getDisplayName().contains("\u00A7bSoul Jar") && meta.getLore().contains("\u00A77Empty")){
+						//	If the display name and lore match...
+						jarsFound+= item.getAmount();
+						Bukkit.getServer().broadcastMessage("Empty Soul Jars Found: " + String.valueOf(jarsFound));	//	Debug message
+						break;
+					}
+				}
+				else{
+					Bukkit.getServer().broadcastMessage("ItemStack we just checked was of type " + item.getType());	//	Debug message
+				}
+			}
+			else{
+				Bukkit.getServer().broadcastMessage("ItemStack we just checked was null.");	//	Debug message
+			}
+		}
+		if (jarsFound > 0){
+			inventory.removeItem(emptySoulJar.souljar);
+			Bukkit.getServer().broadcastMessage("Empty Soul Jars Removed: " + String.valueOf(count));	//	Debug message
 		}
 	}
 	

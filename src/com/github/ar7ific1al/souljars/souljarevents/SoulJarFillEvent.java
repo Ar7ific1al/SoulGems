@@ -1,9 +1,6 @@
 package com.github.ar7ific1al.souljars.souljarevents;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
@@ -13,8 +10,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import com.github.ar7ific1al.souljars.souljars.SoulJar;
-import com.github.ar7ific1al.souljars.souljars.SoulJar.Type;
-import com.github.ar7ific1al.souljars.utils.SJUtils;
 
 public class SoulJarFillEvent extends Event implements Cancellable {
 
@@ -43,49 +38,44 @@ public class SoulJarFillEvent extends Event implements Cancellable {
 		return handlers;
 	}
 	
+	@SuppressWarnings("unused")
 	private Player getPlayer(){
 		return this.player;
 	}
+	@SuppressWarnings("unused")
 	private SoulJar getSoulJar(){
 		return this.souljar;
 	}
+	@SuppressWarnings("unused")
 	private Entity getEntity(){
 		return this.entity;
 	}
 
 	public SoulJarFillEvent(Player player, SoulJar souljar, Entity entity) {
 		this.player = player;
+		this.entity = entity;
 		this.souljar = souljar;
 		this.isCancelled = false;
 		Inventory inventory = player.getInventory();
-		try{
-			for(ItemStack stack : inventory){
-				if (stack.getType().equals(Material.GLASS_BOTTLE)){
-					ItemStack emptyjar = stack;
-					ItemMeta meta = stack.getItemMeta();
-					if (meta.getLore().contains("\u00A77Empty") && meta.getDisplayName().contains("\u00A7bSoul Jar")){
-						for(ItemStack content : inventory.getContents()){
-							if (content == null){
-								if (emptyjar.getAmount() > 1){
-									emptyjar.setAmount(emptyjar.getAmount() - 1);
-								}
-								else{
-									inventory.remove(emptyjar);
-								}
-								SoulJar filledSoulJar = new SoulJar();
-								SoulJar.giveFilledSoulJar(player, entity);
-								break;
-							}
-						}
-						break;
-					}
-				}
-				else{
-					this.setCancelled(true);
+		if (inventory.containsAtLeast(this.souljar.getItemStack(), 1)){
+			boolean hasEmptySlot = false;
+			for(ItemStack is : inventory.getContents()){
+				if (is == null){
+					hasEmptySlot = true;
 				}
 			}
-		}catch(Exception e){
-			
+			if (hasEmptySlot){
+				ItemStack stack = this.souljar.getItemStack();
+				ItemMeta meta = stack.getItemMeta();
+				if (meta.getLore().contains("\u00A77Empty") && meta.getDisplayName().contains("\u00A7bSoul Jar")){
+							SoulJar.takeEmptySoulJar(player, 1);
+							SoulJar filledSoulJar = new SoulJar(entity.getType());
+							filledSoulJar.giveFilledSoulJar(player);
+				}
+			}
+			else{
+				this.setCancelled(true);
+			}
 		}
 	}
 

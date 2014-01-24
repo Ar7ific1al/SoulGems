@@ -4,7 +4,7 @@ import org.bukkit.command.ConsoleCommandSender;
 
 public class Log {
 	
-	public void Log(String message, ConsoleCommandSender console){
+	public static void LogMessage(String message, ConsoleCommandSender console){
 		console.sendMessage(message);
 	}
 	

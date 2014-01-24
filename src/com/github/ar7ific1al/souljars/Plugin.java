@@ -28,7 +28,6 @@ public class Plugin extends JavaPlugin{
 	public static Random random = new Random();
 	
 	
-	@SuppressWarnings("unused")
 	@Override
 	public void onEnable(){
 		logger = new Log();
@@ -36,7 +35,7 @@ public class Plugin extends JavaPlugin{
 		PluginDescriptionFile pdFile = this.getDescription();
 		version = pdFile.getVersion();
 		authors = pdFile.getAuthors();
-		logger.Log(ChatColor.LIGHT_PURPLE + "[SoulJars] SoulJars v" + version + " by " + authors + " enabled.", Bukkit.getServer().getConsoleSender());
+		Log.LogMessage(ChatColor.LIGHT_PURPLE + "[SoulJars] SoulJars v" + version + " by " + authors + " enabled.", Bukkit.getServer().getConsoleSender());
 		
 		if (!getDataFolder().exists()){
 			getDataFolder().mkdir();
@@ -57,7 +56,7 @@ public class Plugin extends JavaPlugin{
 	
 	@Override
 	public void onDisable(){
-		logger.Log(ChatColor.LIGHT_PURPLE + "[SoulJars] SoulJars v" + version + " by " + authors + " disabled.", Bukkit.getServer().getConsoleSender());
+		Log.LogMessage(ChatColor.LIGHT_PURPLE + "[SoulJars] SoulJars v" + version + " by " + authors + " disabled.", Bukkit.getServer().getConsoleSender());
 	}
 	
 }

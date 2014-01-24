@@ -1,11 +1,7 @@
 package com.github.ar7ific1al.souljars.listeners;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -14,14 +10,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-
 import com.github.ar7ific1al.souljars.Plugin;
 import com.github.ar7ific1al.souljars.souljarevents.SoulJarFillEvent;
 import com.github.ar7ific1al.souljars.souljars.SoulJar;
-import com.github.ar7ific1al.souljars.utils.SJUtils;
+import com.github.ar7ific1al.souljars.utils.Log;
 
 public class EntityDeathListener implements Listener{
 	
@@ -29,7 +21,7 @@ public class EntityDeathListener implements Listener{
 	
 	public EntityDeathListener(Plugin instance){
 		plugin = instance;
-		Plugin.logger.Log(ChatColor.LIGHT_PURPLE + "[SoulGems' Entity Death Listener Registered.", Bukkit.getConsoleSender());
+		Log.LogMessage(ChatColor.LIGHT_PURPLE + "[SoulGems' Entity Death Listener Registered.", Bukkit.getConsoleSender());
 	}
 	
 	@EventHandler
