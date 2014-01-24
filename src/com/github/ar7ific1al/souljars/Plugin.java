@@ -10,6 +10,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.github.ar7ific1al.souljars.commands.global.BaseCommand;
+import com.github.ar7ific1al.souljars.listeners.EntityDeathListener;
 import com.github.ar7ific1al.souljars.utils.Log;
 
 public class Plugin extends JavaPlugin{
@@ -44,8 +45,14 @@ public class Plugin extends JavaPlugin{
 		//	Define command ececutors
 		BaseCommand baseCommands = new BaseCommand(this);
 		
+		//	Define listeners
+		EntityDeathListener deathListener = new EntityDeathListener(this);
+		
 		//	Register commands
 		getCommand("souljars").setExecutor(baseCommands);
+		
+		//	Register listeners
+		pm.registerEvents(deathListener, this);
 	}
 	
 	@Override

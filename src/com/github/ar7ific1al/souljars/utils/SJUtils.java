@@ -1,7 +1,7 @@
 package com.github.ar7ific1al.souljars.utils;
 
 
-public class SGUtils {
+public class SJUtils {
 	
 	public static String ColorMessage(String input){
 		

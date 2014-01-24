@@ -10,6 +10,7 @@ import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -20,7 +21,7 @@ import com.github.ar7ific1al.souljars.Plugin;
 import com.github.ar7ific1al.souljars.souljarevents.SoulJarFillEvent;
 import com.github.ar7ific1al.souljars.souljars.SoulJar;
 import com.github.ar7ific1al.souljars.souljars.SoulJar.Type;
-import com.github.ar7ific1al.souljars.utils.SGUtils;
+import com.github.ar7ific1al.souljars.utils.SJUtils;
 
 public class BaseCommand implements CommandExecutor	{
 	
@@ -44,7 +45,7 @@ public class BaseCommand implements CommandExecutor	{
 					
 					//	For each String "m" in helpMessage - Similar to C# foreach (object o in object)
 					for(String m : infoMessage){
-						sender.sendMessage(SGUtils.ColorMessage(m));
+						sender.sendMessage(SJUtils.ColorMessage(m));
 					}
 				}
 				else if (args.length == 1){		//	If arg lenth = 1 (1 args)
@@ -57,29 +58,10 @@ public class BaseCommand implements CommandExecutor	{
 						
 						//	For each String "m" in helpMessage - Similar to C# foreach (object o in object)
 						for(String m : helpMessage){
-							sender.sendMessage(SGUtils.ColorMessage(m));
+							sender.sendMessage(SJUtils.ColorMessage(m));
 						}
 						//	#IGNORE
-						SoulJar jar = new SoulJar();
-						jar.setType(Type.CHICKEN);
-						jar.setName("Chicken Soul");
-						SoulJarFillEvent event = new SoulJarFillEvent((Player) sender, jar);
-						Bukkit.getPluginManager().callEvent(event);
-						if (event.isCancelled()){
-							sender.sendMessage(SGUtils.ColorMessage("&cYou cannot fill that Soul Jar."));
-						}
-						else{
-							Inventory inv = ((Player) sender).getInventory();
-							ItemStack souljar = new ItemStack(Material.POTION, 1, (short) 21);
-								souljar.setDurability((short)2000);
-							ItemMeta meta = souljar.getItemMeta();
-							List<String> lore = Arrays.asList(SGUtils.ColorMessage("&7&oChicken Soul"), SGUtils.ColorMessage("&7Level: 1"));
-							meta.setDisplayName(SGUtils.ColorMessage("&dChicken Soul"));
-							meta.setLore(lore);
-							souljar.setItemMeta(meta);
-							inv.setItem(inv.firstEmpty(), souljar);
-							sender.sendMessage(SGUtils.ColorMessage("&dCongratulations! You have a useless Chicken Soul Jar."));
-						}
+						SoulJar.giveEmptySoulJar((Player)sender);
 						//	#ENDIGNORE
 					}
 				}
