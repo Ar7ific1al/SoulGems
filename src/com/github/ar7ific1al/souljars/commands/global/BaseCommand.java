@@ -1,15 +1,20 @@
 package com.github.ar7ific1al.souljars.commands.global;
 
 import java.util.ArrayList;
+
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+
 import com.github.ar7ific1al.souljars.Plugin;
 import com.github.ar7ific1al.souljars.souljars.SoulJar;
 import com.github.ar7ific1al.souljars.utils.Log;
 import com.github.ar7ific1al.souljars.utils.SJUtils;
+import com.rit.sucy.EnchantmentAPI;
 
 public class BaseCommand implements CommandExecutor	{
 	
@@ -50,6 +55,9 @@ public class BaseCommand implements CommandExecutor	{
 						}
 						//	#IGNORE
 						SoulJar.giveEmptySoulJar((Player)sender, 64);
+						ItemStack sword = new ItemStack(Material.DIAMOND_SWORD, 1);
+						EnchantmentAPI.getEnchantment("Soul Sap").addToItem(sword, 1);
+						((Player)sender).getInventory().addItem(sword);
 						//	#ENDIGNORE
 					}
 				}

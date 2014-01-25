@@ -4,6 +4,7 @@ main: com.github.ar7ific1al.souljars.Plugin
 name: SoulJars
 url: 
 version: 0.1a
+depend: [EnchantmentAPI]
 commands:
     souljars:
         description: Base command for SoulJars

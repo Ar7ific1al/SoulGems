@@ -14,6 +14,7 @@ import com.github.ar7ific1al.souljars.Plugin;
 import com.github.ar7ific1al.souljars.souljarevents.SoulJarFillEvent;
 import com.github.ar7ific1al.souljars.souljars.SoulJar;
 import com.github.ar7ific1al.souljars.utils.Log;
+import com.rit.sucy.EnchantmentAPI;
 
 public class EntityDeathListener implements Listener{
 	
@@ -45,8 +46,10 @@ public class EntityDeathListener implements Listener{
 							return;
 						}
 					}
-					SoulJarFillEvent soulJarFillEvent = new SoulJarFillEvent(player, new SoulJar(), event.getEntity());
-					plugin.getServer().getPluginManager().callEvent(soulJarFillEvent);
+					if (EnchantmentAPI.itemHasEnchantment(player.getItemInHand(), "Soul Sap")){
+						SoulJarFillEvent soulJarFillEvent = new SoulJarFillEvent(player, new SoulJar(), event.getEntity());
+						plugin.getServer().getPluginManager().callEvent(soulJarFillEvent);
+					}
 				}
 			}
 		}

@@ -13,6 +13,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import com.github.ar7ific1al.souljars.utils.SJUtils;
+import com.rit.sucy.EnchantmentAPI;
 
 public class SoulJar {
 	
@@ -78,6 +79,7 @@ public class SoulJar {
 		List<String> lore = Arrays.asList(SJUtils.ColorMessage("&7Empty"));
 		this.meta.setLore(lore);
 		this.souljar.setItemMeta(this.meta);
+		EnchantmentAPI.getEnchantment("Soul Snare").addToItem(this.souljar, 1);
 	}
 	
 	//	Constructor; create 'count' empty Soul Jars
@@ -89,6 +91,7 @@ public class SoulJar {
 		List<String> lore = Arrays.asList(SJUtils.ColorMessage("&7Empty"));
 		this.meta.setLore(lore);
 		this.souljar.setItemMeta(this.meta);
+		EnchantmentAPI.getEnchantment("Soul Snare").addToItem(this.souljar, 1);
 	}
 	
 	//	Constructor; create a filled Soul Jar
@@ -189,6 +192,7 @@ public class SoulJar {
 		List<String> lore = Arrays.asList(SJUtils.ColorMessage("&7" + soulName));
 		this.meta.setLore(lore);
 		this.souljar.setItemMeta(this.meta);
+		EnchantmentAPI.getEnchantment("Soul Snare").addToItem(this.souljar, 5);
 	}
 	
 	//	Give the player an empty Soul Jar; Careful, it can also be used when you should be giving a filled Soul Jar...
@@ -197,6 +201,7 @@ public class SoulJar {
 		for(ItemStack stack : inv.getContents()){
 			if (stack == null){
 				SoulJar emptysouljar = new SoulJar(count);
+				EnchantmentAPI.getEnchantment("Soul Snare").addToItem(emptysouljar.souljar, 1);
 				inv.addItem(emptysouljar.souljar);
 				break;
 			}
@@ -208,6 +213,7 @@ public class SoulJar {
 		Inventory inv = player.getInventory();
 		for(ItemStack stack : inv.getContents()){
 			if (stack == null){
+				EnchantmentAPI.getEnchantment("Soul Snare").addToItem(this.souljar, 5);
 				inv.addItem(this.souljar);
 				break;
 			}
@@ -225,25 +231,15 @@ public class SoulJar {
 		for(ItemStack item : inventory.getContents()){	//	For each ItemStack in player's inventory
 			if (item != null){	//	If the item stack is not a null stack (empty Inventory space)
 				if (item.getType().equals(Material.GLASS_BOTTLE)){
-					ItemMeta meta = item.getItemMeta();	//	Grab the ItemStack's meta
-					if (meta.getDisplayName().contains("\u00A7bSoul Jar") && meta.getLore().contains("\u00A77Empty")){
-						//	If the display name and lore match...
+					if (EnchantmentAPI.itemHasEnchantment(item, "Soul Snare")){
 						jarsFound+= item.getAmount();
-						Bukkit.getServer().broadcastMessage("Empty Soul Jars Found: " + String.valueOf(jarsFound));	//	Debug message
 						break;
 					}
 				}
-				else{
-					Bukkit.getServer().broadcastMessage("ItemStack we just checked was of type " + item.getType());	//	Debug message
-				}
-			}
-			else{
-				Bukkit.getServer().broadcastMessage("ItemStack we just checked was null.");	//	Debug message
 			}
 		}
 		if (jarsFound > 0){
 			inventory.removeItem(emptySoulJar.souljar);
-			Bukkit.getServer().broadcastMessage("Empty Soul Jars Removed: " + String.valueOf(count));	//	Debug message
 		}
 	}
 	
