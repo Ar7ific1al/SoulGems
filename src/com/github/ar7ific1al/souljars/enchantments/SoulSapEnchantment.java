@@ -5,6 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
 
 import com.github.ar7ific1al.souljars.souljarevents.SoulJarFillEvent;
 import com.github.ar7ific1al.souljars.souljars.SoulJar;
@@ -33,10 +34,5 @@ public class SoulSapEnchantment extends CustomEnchantment{
 		if (event.getDamage() < target.getHealth()){
 			ParticleEffect.TOWN_AURA.display(target.getLocation(), 0.3f, 0.75f, 0.3f, 0, 300);
 		}
-		else{
-			SoulJarFillEvent soulJarFillEvent = new SoulJarFillEvent((Player) user, new SoulJar(), event.getEntity());
-			Bukkit.getServer().getPluginManager().callEvent(soulJarFillEvent);
-		}
 	}
-
 }

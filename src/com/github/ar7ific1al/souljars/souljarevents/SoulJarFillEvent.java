@@ -81,9 +81,8 @@ public class SoulJarFillEvent extends Event implements Cancellable {
 					SoulJar.takeEmptySoulJar(player, 1);
 					SoulJar filledSoulJar = new SoulJar(entity.getType());
 					filledSoulJar.giveFilledSoulJar(player);
-					entity.getWorld().playSound(entity.getLocation(), Sound.ZOMBIE_REMEDY, 0.75f, 1f);
+					entity.getWorld().playSound(entity.getLocation(), Sound.ZOMBIE_REMEDY, 0.75f, 2f);
 					ParticleEffect.WITCH_MAGIC.display(entity.getLocation(), 0.3f, 0.75f, 0.3f, 25, 200);
-					//ParticleEffect.MOB_SPELL_AMBIENT.display(player.getLocation(), 0.3f, 0.75f, 0.3f, 5, 200);
 				}
 			}
 			else{

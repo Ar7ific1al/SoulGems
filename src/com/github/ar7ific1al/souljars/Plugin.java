@@ -57,13 +57,13 @@ public class Plugin extends EnchantPlugin{
 		BaseCommand baseCommands = new BaseCommand(this);
 
 		// Define listeners
-		//EntityDeathListener deathListener = new EntityDeathListener(this);
+		EntityDeathListener deathListener = new EntityDeathListener(this);
 
 		// Register commands
 		getCommand("souljars").setExecutor(baseCommands);
 
 		// Register listeners
-		//pm.registerEvents(deathListener, this);
+		pm.registerEvents(deathListener, this);
 
 	}
 
