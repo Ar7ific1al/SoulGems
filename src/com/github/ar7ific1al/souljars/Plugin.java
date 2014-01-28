@@ -1,19 +1,15 @@
 package com.github.ar7ific1al.souljars;
 
 import java.io.File;
-import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
-import org.bukkit.plugin.java.JavaPlugin;
-
 import com.github.ar7ific1al.souljars.commands.global.BaseCommand;
 import com.github.ar7ific1al.souljars.enchantments.SoulSapEnchantment;
 import com.github.ar7ific1al.souljars.enchantments.SoulSnareEnchantment;
